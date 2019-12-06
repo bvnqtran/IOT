@@ -1,0 +1,207 @@
+int multiplex = 0;
+int compteur = 0;
+int unite = 0;
+int dizaine = 0;
+int centaine = 0;
+int milier = 0;
+int temps = 0;
+int vitesse = 0;
+
+void setup()
+{
+  pinMode(0, OUTPUT);
+  pinMode(1, OUTPUT);
+  pinMode(2, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(9, OUTPUT);
+  // Serial.begin(9600);
+  compteur = 1;
+}
+
+
+ void efface (){
+  digitalWrite(0, HIGH);
+  digitalWrite(1, HIGH);
+  digitalWrite(2, HIGH);
+  digitalWrite(3, HIGH);
+  digitalWrite(4, HIGH);
+  digitalWrite(5, HIGH);
+  digitalWrite(6, HIGH);
+  digitalWrite(7, HIGH);
+ }
+
+ void zero (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+ }
+
+ void un (){
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+ }
+
+ void deux (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void trois (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(6, LOW);
+ }
+  
+ void quatre (){
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void cinq (){
+  digitalWrite(0, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void six (){
+  digitalWrite(0, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void sept (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(0, LOW);
+ }
+
+ void huit (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void neuf (){
+  digitalWrite(0, LOW);
+  digitalWrite(1, LOW);
+  digitalWrite(2, LOW);
+  digitalWrite(3, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+ }
+
+ void aff_nb (int nb){
+switch (nb) {
+  case 1:
+    un();
+    break;
+  case 2:
+    deux();
+    break;
+  case 3:
+    trois();
+    break;
+  case 4:
+    quatre();
+    break;
+  case 5:
+    cinq();
+    break;
+  case 6:
+    six();
+    break;
+  case 7:
+    sept();
+    break;
+  case 8:
+    huit();
+    break;
+  case 9:
+    neuf();
+    break;
+  case 0:
+    zero();
+    break;  
+  default:
+    zero();
+    break;
+}}
+
+
+void loop()
+{
+  multiplex = 5;
+  vitesse = analogRead(A0)/50;
+  
+  
+  if (temps > vitesse)
+  {temps = 0;
+  compteur ++;    
+  milier = compteur / 1000 ;
+  centaine = (compteur - ( milier * 1000)) / 100 ;
+  dizaine =  ( compteur - ( centaine*100) - ( milier * 1000) ) / 10 ;
+  unite = compteur % 10 ; 
+  //Serial.println( compteur);
+  //Serial.println( dizaine);
+  //Serial.println( centaine);
+  }
+  else
+   temps++;
+
+  
+  efface();
+  digitalWrite(9, HIGH);
+  aff_nb(unite);
+  delay(multiplex); // Wait for multiplex millisecond(s)
+  digitalWrite(9, LOW);
+  
+  efface();
+  digitalWrite(10, HIGH);
+  aff_nb(dizaine);
+  delay(multiplex); // Wait for multiplex millisecond(s)
+  digitalWrite(10, LOW);
+
+  efface();
+  digitalWrite(11, HIGH);
+  aff_nb(centaine);
+  delay(multiplex); // Wait for multiplex millisecond(s)
+  digitalWrite(11, LOW);
+
+  efface();
+  digitalWrite(12, HIGH);
+  aff_nb(milier);
+  delay(multiplex); // Wait for multiplex millisecond(s)
+  digitalWrite(12, LOW);
+
+
+  
+}
+
+
